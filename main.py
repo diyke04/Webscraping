@@ -68,7 +68,7 @@ def parse_html(html):
 
 def get_links():
     links = []
-    for i in range(1, 20):
+    for i in range(1, 1934):
         links.append(f"https://hfr.health.gov.ng/facilities/hospitals-list?page={i}#")
     # print(links)
     return links
