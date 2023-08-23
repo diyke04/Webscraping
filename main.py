@@ -96,8 +96,6 @@ if __name__ == "__main__":
     urls = get_links()
     datas = asyncio.run(main(urls=urls))
 
-    with open("data.json", "w") as f:
-        json.dump(datas, fp=f)
 
     for data in datas:
         parse_html(data)
