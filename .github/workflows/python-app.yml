@@ -30,8 +30,8 @@ jobs:
 
     - name: Commit files
       run: |
-        git config --local user.email "niceiyke@github.com"
-        git config --local user.name "Niceiyk"
+        git config --global user.email "niceiyke@github.com"
+        git config --global user.name "Niceiyke"
         git add .
         git commit -m "data upload"
     - name: Push changes
