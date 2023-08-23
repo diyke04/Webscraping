@@ -32,7 +32,8 @@ jobs:
       run: |
         git config --local user.email "niceiyke@github.com"
         git config --local user.name "Niceiyk"
-        git commit -a -m "data upload"
+        git add .
+        git commit -m "data upload"
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
