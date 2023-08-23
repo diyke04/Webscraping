@@ -5,7 +5,7 @@ import aiohttp
 import asyncio
 from bs4 import BeautifulSoup
 
-data = []
+all_data = []
 
 
 def parse_html(html):
@@ -40,7 +40,7 @@ def parse_html(html):
         envoronmental_health_officers = views["data-env_health_officers"]
         health_attendants = views["data-attendants"]
 
-        data.append(
+        all_data.append(
             [
                 state,
                 lga,
@@ -68,7 +68,7 @@ def parse_html(html):
 
 def get_links():
     links = []
-    for i in range(1, 1935):
+    for i in range(1, 1934):
         links.append(f"https://hfr.health.gov.ng/facilities/hospitals-list?page={i}#")
     # print(links)
     return links
@@ -80,11 +80,7 @@ async def get_data(client, url):
 
 
 async def get_all(client, urls):
-    tasks = []
-
-    for url in urls:
-        task = asyncio.create_task(get_data(client=client, url=url))
-        tasks.append(task)
+    tasks = [asyncio.create_task(get_data(client=client, url=url)) for url in urls]
     results = await asyncio.gather(*tasks)
     return results
 
@@ -98,10 +94,13 @@ async def main(urls):
 
 if __name__ == "__main__":
     urls = get_links()
-    data = asyncio.run(main(urls=urls))
+    datas = asyncio.run(main(urls=urls))
 
     with open("data.json", "w") as f:
-        json.dump(data, fp=f)
+        json.dump(datas, fp=f)
 
-    df = pd.DataFrame(data)
+    for data in datas:
+        parse_html(data)
+
+    df = pd.DataFrame(all_data)
     df.to_csv("data.csv")
