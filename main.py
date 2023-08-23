@@ -90,7 +90,7 @@ async def get_all(client, urls):
 
 
 async def main(urls):
-    timeout = aiohttp.ClientTimeout(total=600)
+    timeout = aiohttp.ClientTimeout(total=3600)
     async with aiohttp.ClientSession(timeout=timeout) as client:
         data = await get_all(urls=urls, client=client)
         return data
